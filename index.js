@@ -42,28 +42,24 @@ async function run() {
 
     app.put("/coffee/:id", async (req, res) => {
       const id = req.params.id;
-      const coffee = req.body;
-      console.log(id, coffee);
+      const updatedCoffee = req.body;
+      console.log(id, updatedCoffee);
 
       const filter = { _id: new ObjectId(id) };
       const options = { upsert: true };
-      const updatedCoffee = {
+      const coffee = {
         $set: {
-          name: coffee.name,
-          quantity: coffee.quantity,
-          supplier: coffee.supplier,
-          taste: coffee.taste,
-          category: coffee.category,
-          details: coffee.details,
-          photo: coffee.photo,
+          name: updatedCoffee.name,
+          quantity: updatedCoffee.quantity,
+          supplier: updatedCoffee.supplier,
+          taste: updatedCoffee.taste,
+          category: updatedCoffee.category,
+          details: updatedCoffee.details,
+          photo: updatedCoffee.photo,
         },
       };
 
-      const result = await coffeeCollection.updateOne(
-        filter,
-        updatedCoffee,
-        options
-      );
+      const result = await coffeeCollection.updateOne(filter, coffee, options);
 
       res.send(result);
     });
