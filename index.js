@@ -5,8 +5,14 @@ require("dotenv").config();
 const app = express();
 const port = process.env.PORT || 5000;
 
-// middleware
-app.use(cors());
+// Middleware
+app.use(
+  cors({
+    origin: "https://coffee-store-topu.netlify.app", // Your Netlify frontend URL
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    credentials: true,
+  })
+);
 app.use(express.json());
 
 const uri = `mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@cluster0.kon9irj.mongodb.net/?retryWrites=true&w=majority`;
